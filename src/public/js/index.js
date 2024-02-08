@@ -4,7 +4,7 @@ socket.on("productos", (data) => {
     renderProductos(data);
 })
 
-//Función para renderizar nuestros productos: 
+//Mostrar productos
 
 const renderProductos = (productos) => {
     const contenedorProductos = document.getElementById("contenedorProductos");
@@ -22,7 +22,7 @@ const renderProductos = (productos) => {
                         `;
 
         contenedorProductos.appendChild(card);
-        //Agregamos el evento al boton de eliminar: 
+        //boton de eliminar: 
         card.querySelector("button").addEventListener("click", ()=> {
             eliminarProducto(item.id);
         })

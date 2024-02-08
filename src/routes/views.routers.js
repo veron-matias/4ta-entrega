@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-//Punto 2: 
+//(2)
 
 router.get("/realtimeproducts", async (req, res) => {
     try {

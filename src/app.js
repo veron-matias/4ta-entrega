@@ -40,29 +40,23 @@ const httpServer = app.listen(PUERTO, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-
-//Debo obtener el array de productos: 
 const ProductManager = require("./managers/productManager.js");
 const productManager = new ProductManager("../products.json");
 
-//Creamos el server de Socket.io
 const io = socket(httpServer);
 
 io.on("connection", async (socket) => {
     console.log("Un cliente se conecto");
 
-    //Enviamos el array de productos al cliente que se conectó. 
-    socket.emit("productos", await productManager.getProducts());
+    
+    socket.emit("productos", await productManager.getProducts()); //Enviamos el array de productos al cliente que se conectó. 
 
-    //Recibimos el evento "eliminarProducto" desde el cliente: 
-    socket.on("eliminarProducto",  async (id) => {
+    
+    socket.on("eliminarProducto",  async (id) => { //Recibimos el evento "eliminarProducto" desde el cliente: 
         await productManager.deleteProduct(id);
-
-        //Debo enviarle la lista actualizada al cliente: 
-        io.sockets.emit("productos", await productManager.getProducts());
+        io.sockets.emit("productos", await productManager.getProducts()); // se envia la lista actualizada al cliente
 
     })
-    //Agregar producto: 
     socket.on("agregarProducto", async (producto) => {
         console.log(producto);
         await productManager.addProduct(producto);
